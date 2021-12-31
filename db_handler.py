@@ -31,7 +31,7 @@ def get_user_list():
     # API => 원하는 쿼리의 수행 결과를, 가공해서 화면단에서 사용할 수 있게 전달해주는 역할
     return result
 
-# 페이지에 맞는 게시글 목록 가져오가
+# 페이지에 맞는 게시글 목록 가져오기
 def get_posts(page):
     # 1페이지당 5개의 글을 보여준다
     
@@ -46,9 +46,18 @@ def get_posts(page):
     
     offset = (page - 1)*5
     
-    sql = f"SELECT * FROM posts AS p ORDER by p.created_at DESC LIMIT {offset}"
+    # 제목 : 실제제목 (8월 5일, 이승훈이 작성함) => 작성자 이름도 같이 표시
+    sql = f"SELECT * FROM posts AS p JOIN users ON p.user_id = users.id ORDER BY p.created_at DESC LIMIT {offset}, 5"
     
     cursor.execute(sql)
     result = cursor.fetchall()
     
     return result
+
+# 강의목록 가져오기
+def get_lectures():
+    
+    sql = f"SELECT * FROM lectures"
+    
+    cursor.execute(sql)
+    return cursor.fetchall()

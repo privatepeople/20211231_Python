@@ -4,17 +4,18 @@
 
 # 메뉴 입력 / 분기 처리 등
 # 사용자 Contact 부분 전담 => Android App으로 대체 / HTML 웹으로 대체
-from db_handler import get_user_list, get_posts
-from models import Users
+from db_handler import get_user_list, get_posts, get_lectures
+from models import Users, Posts, Lectures
 
 # 메인 메뉴 출력 기능 (함수)
 def show_main_menu():
     while True:
-        print('===== 강의 관리 시스템 (LMS) =====')
+        print('\n===== 강의 관리 시스템 (LMS) =====')
         print('1. 수강생 목록 조회')
         print('2. 게시글 목록 조회')
+        print('3. 강의 목록 조회하기')
         print('0. 프로그램 종료')
-        print('=================================')
+        print('=================================\n')
         num = int(input('메뉴 선택 : '))
         
         if num == 0:
@@ -29,6 +30,12 @@ def show_main_menu():
             # DB에서 게시글 목록 조회
             page_num = int(input('몇 페이지의 글을 보겠습니까? : '))
             get_posts_by_page_num(page_num)
+        elif num == 3:
+            # DB에서 강의 목록 조회
+            result = get_lectures()
+            for row in result:
+                (Lectures(row)).lecture_inquiry()
+            
 
 # 1번 누르면 => DB에서 수강생 목록 조회를 요청하는 기능
 def get_user_list_from_db():
@@ -44,7 +51,10 @@ def get_user_list_from_db():
 def get_posts_by_page_num(page):
     result = get_posts(page)
     for row in result:
-        print(row)
+        post = Posts(row)
+        post.get_simple_post()
+
+        
 
 # python 명령어로 실행될떄 => 위에서부터 밑으로 한줄씩 순서대로 실행됨
 # 함수도 만들어 두고 나서 사용해야함
