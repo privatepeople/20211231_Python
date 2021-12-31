@@ -5,13 +5,16 @@ class Users():
     
     def __init__(self, info_dict):
         # info_dict 안의 이름표 / 실제값을 이용해서 데이터 세팅
-        print(info_dict)
         self.id = info_dict['id']
         self.name = info_dict['name']
         self.birth_year = info_dict['birth_year']
         self.address = info_dict['address']
+        self.gender = info_dict['gender']
         self.height = info_dict['height']
         self.created_at = info_dict['created_at']
         self.friend_id = info_dict['friend_id']
-        self.id = info_dict['id']
-        
+    
+    # 사용자의 정보를 가공해서 간략하게 출력
+    # 이름 - 35세, 남성
+    def get_simple_info(self):
+        print(f'{self.name} - {self.birth_year}세, {self.gender}')
