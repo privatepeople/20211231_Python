@@ -1,6 +1,5 @@
 # DB 연결 / 쿼리 / 결과 분석 표시 등등
 # 데이터베이스와 관련된 파이썬 코드
-from typing import Dict
 from pymysql import connect
 from pymysql.cursors import DictCursor # DB SELECT 결과를 dict 형태로 가져오게 해주는 클래스
 
@@ -14,3 +13,20 @@ db = connect(
     charset = 'utf8', # 연결할 DB가 한글을 utf8 인코딩으로 한글 처리진행
     cursorclass = DictCursor
 )
+
+# 쿼리수행 전담 변수
+cursor = db.cursor()
+
+# 연결 확인용 SELECT문.
+
+# sql문 작성
+# cursor.execute
+# 결과 fetch => 리스트 / dict등 형태로 변환
+
+sql = 'SELECT * FROM users'
+
+cursor.execute(sql)
+
+result = cursor.fetchall()
+
+print(result)
